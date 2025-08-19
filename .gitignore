@@ -1,0 +1,6 @@
+**/.pytest_cache
+**/__pycache__
+**/build
+**/.coverage
+**/pyconpty.egg-info
+**/*.pdb
