@@ -21,7 +21,7 @@ For queries, contact me at: melwyncarlo@gmail.com
 
 # PyConPTY
 
-A Python-based interface for the ConPTY (Windows Pseudo-console) API.
+A Python-based interface for the ConPTY (Windows Pseudo-console) API. <sub>[Check out the PyPI package](https://pypi.org/project/pyconpty/)</sub>
 
 > Your ultimate space to get immensely creative with unique terminals, remote accesses, and interactive and automated processes.
 >
@@ -40,6 +40,7 @@ _**Cool Facts:**_
 Windows 10 Version 1809 Build 17763 (Windows 10.0.17763)
 
 _Oh, do not worry! The installation process will tell you if it is a match or not. But this is the minimum required._
+<br/>
 
 ### Install
 
@@ -59,10 +60,16 @@ If `pip` does not work, then replace `pip` with either `py -m pip`, `python -m p
 
 If you are still facing issues, then maybe _Python_ is not installed in the first place (as _Pip_ comes bundled with _Python_). In that case, [click here to download Python](https://www.python.org/downloads/).
 
+If you face any issues while using `pyconpty`, you may uninstall it and then try building from source using the following commands:
+```
+pip uninstall pyconpty
+pip install pyconpty --no-cache-dir --no-binary pyconpty
+```
+<br/>
+
 ### Use
 
 - **Example #1**
-
 ```py
 # Filename: ipconfig_example.py
 
@@ -73,10 +80,10 @@ console.run("ipconfig")
 print(console.getoutput())
 ```
 
-![Example #1: IPConfig Example - Output](https://github.com/melwyncarlo/PyConPTY/blob/main/examples/ipconfig_example.png "Example #1: IPConfig Example - Output")
+![Example #1: IPConfig Example - Output](https://raw.githubusercontent.com/melwyncarlo/PyConPTY/refs/heads/main/examples/ipconfig_example.png "Example #1: IPConfig Example - Output")
+<br/>
 
 - **Example #2**
-
 ```py
 # Filename: factorial_example.py
 
@@ -135,7 +142,8 @@ int main() {
 }
 ```
 
-![Example #2: Factorial Example - Output](https://github.com/melwyncarlo/PyConPTY/blob/main/examples/factorial_example.png "Example #1: Factorial Example - Output")
+![Example #2: Factorial Example - Output](https://raw.githubusercontent.com/melwyncarlo/PyConPTY/refs/heads/main/examples/factorial_example.png "Example #1: Factorial Example - Output")
+<br/><br/>
 
 ### Make <sub>_(for the mavericks out there)_</sub>
 
@@ -211,7 +219,7 @@ ConPTY(width = 80, height = 24)
 
 This class creates a ConPTY instance for communicating with ConHost.
 
-Check the [`isinitialized`]("#2--isinitialized-property") property to confirm the initialization's success.
+Check the [`isinitialized`](#2--isinitialized-property) property to confirm the initialization's success.
 
 `width` and `height` are the pseudo-console's (terminal's) width and height, measured in 'number of characters'. They determine the I/O's internal buffer size and display. If you need the output unwrapped for _N_ characters, then set `width = N + 1`.
 
@@ -233,7 +241,7 @@ CONSOLE_WIDTH_NOT_INT, CONSOLE_HEIGHT_NOT_INT
 
 `True`, if the class ConPTY initialized properly, else `False`.
 
-If `False`, then check the [`lasterror`]("#3--lasterror-property") property to determine the reason for failure.
+If `False`, then check the [`lasterror`](#3--lasterror-property) property to determine the reason for failure.
 
 Check this property post-initialization as a safety-check, if the initialization arguments are dynamic and not static.
 
@@ -394,7 +402,7 @@ Returns `True` if the process started successfully, else immediately returns `Fa
 
 The command string's length must not exceed 32,766 characters.
 
-If `False`, check the [`lasterror`]("#3--lasterror-property") property to determine the reason for failure.
+If `False`, check the [`lasterror`](#3--lasterror-property) property to determine the reason for failure.
 
 `waitfor` states the minimum amount of time, in seconds, to wait for incoming data.
 
@@ -458,7 +466,7 @@ Runs the given command or program, and then waits for its completion.\
 Returns `True` if the process started successfully, else immediately returns `False`.\
 This is an _alias_ for the [`run(command, waitfor=-1, ...)`](#10--run-function) function.
 
-If `False`, check the [`lasterror`]("#3--lasterror-property") property to determine the reason for failure.
+If `False`, check the [`lasterror`](#3--lasterror-property) property to determine the reason for failure.
 
 Refer to the [`run()`](#10--run-function) function for more details on the `command`, `timedelta`, `stripinput`, `internaltimedelta`, and `postenddelay` parameters, and for possible errors.
 <br/>
@@ -475,7 +483,7 @@ waittocomplete(waitfor = -2, timedelta = 0.1)
 Waits for a command or program to partially or fully complete.\
 Returns `True` if the wait conditions were satisfied, else immediately returns `False`.
 
-If `False`, check the [`lasterror`]("#3--lasterror-property") property to determine the reason for failure.
+If `False`, check the [`lasterror`](#3--lasterror-property) property to determine the reason for failure.
 
 Refer to the [`run()`](#10--run-function) function for more details on the `waitfor` and `timedelta` parameters.
 
@@ -758,7 +766,7 @@ kill()
 
 Terminates (kills) the currently running process, and returns `True` if the process was terminated, else `False`.
 
-If `False`, check the [`lasterror`]("#3--lasterror-property") property to determine the reason for failure.
+If `False`, check the [`lasterror`](#3--lasterror-property) property to determine the reason for failure.
 
 ```
 Possible Errors:
@@ -777,7 +785,7 @@ enablevts()
 
 Enables Virtual Terminal Sequences (VTS), aka, Escape Code Sequences for the terminal display, and returns `True` if VTS is successfully enabled, else `False`.
 
-If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`]("#3--lasterror-property").
+If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`](#3--lasterror-property).
 
 ```
 Possible Errors:
@@ -795,7 +803,7 @@ disablevts()
 
 Disables Virtual Terminal Sequences (VTS), aka, Escape Code Sequences for the terminal display, and returns `True` if VTS is successfully disabled, else `False`.
 
-If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`]("#3--lasterror-property").
+If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`](#3--lasterror-property).
 
 Refer to the [`enablevts()`](#23--enablevts-function) function for possible errors.
 <br/>
@@ -810,7 +818,7 @@ resetdisplay()
 Resets the terminal display.\
 This is an _alias_ for the [`disablevts()`](#24--disablevts-function) function.
 
-If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`]("#3--lasterror-property").
+If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`](#3--lasterror-property).
 
 Refer to the [`enablevts()`](#23--enablevts-function) function for possible errors.
 <br/>

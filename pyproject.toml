@@ -23,19 +23,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyconpty"
-version = "1.0"
+version = "1.1"
 description = "A Python wrapper for the ConPTY (Windows Pseudo-console) API"
 authors = [
-    { name = "Melwyn Francis Carlo", email = "melwyncarlo@gmail.com" }
-]
-maintainers = [
     { name = "Melwyn Francis Carlo", email = "melwyncarlo@gmail.com" }
 ]
 license = "GPL-3.0-only"
 license-files = ["LICENSE"]
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.8"
-keywords = ["conpty", "pseudo", "console", "winpty", "pty", "tty", "terminal"]
+keywords = ["pyconpty", "conpty", "windows", "pseudo", "console", "pseudoconsole", "winpty", "pty", "tty", "terminal", "subprocess"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: Microsoft :: Windows :: Windows 10",
@@ -49,10 +46,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://example.com"
-Documentation = "https://example.com"
-Repository = "https://example.com"
-Issues = "https://example.com"
+Homepage = "https://github.com/melwyncarlo/PyConPTY"
+Issues = "https://github.com/melwyncarlo/PyConPTY/issues"
 
 [tool.setuptools]
 include-package-data = false
