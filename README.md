@@ -63,7 +63,7 @@ If you are still facing issues, then maybe _Python_ is not installed in the firs
 
 - **Example #1**
 
-```
+```py
 # Filename: ipconfig_example.py
 
 from pyconpty import ConPTY
@@ -73,11 +73,11 @@ console.run("ipconfig")
 print(console.getoutput())
 ```
 
-![Example #1: IPConfig Example - Output](path/to/image.png "Example #1: IPConfig Example - Output")
+![Example #1: IPConfig Example - Output](https://github.com/melwyncarlo/PyConPTY/blob/main/examples/ipconfig_example.png "Example #1: IPConfig Example - Output")
 
 - **Example #2**
 
-```
+```py
 # Filename: factorial_example.py
 
 from pyconpty import ConPTY
@@ -101,7 +101,7 @@ if console.isrunning:
     console.kill()
 ```
 
-```
+```c
 /* Filename: factorial_example.c                           */
 /* Build: gcc factorial_example.c -o factorial_example.exe */
 
@@ -135,7 +135,7 @@ int main() {
 }
 ```
 
-![Example #2: Factorial Example - Output](path/to/image.png "Example #1: Factorial Example - Output")
+![Example #2: Factorial Example - Output](https://github.com/melwyncarlo/PyConPTY/blob/main/examples/factorial_example.png "Example #1: Factorial Example - Output")
 
 ### Make <sub>_(for the mavericks out there)_</sub>
 
@@ -168,11 +168,12 @@ After installing the debugging tools, add the following (or similar) filepath to
 `C:\Program Files (x86)\Windows Kits\10\Debuggers\x64`.
 <br/>
 
-Testing via CDB:
+<u>Testing via CDB</u>:
 ```
 cls; cdb -y "cache*C:\Symbols;srv*http://msdl.microsoft.com/download/symbols;FOLDER_PATH_TO_PDB_FILE" -srcpath "FOLDER_PATH_TO_C_FILE" -lines -c "sxd av; g" python -m pytest .
 ```
-Note that:
+
+<u>Note that</u>:
 - `FOLDER_PATH_TO_PDB_FILE` is the folder location where the Program Database _(\*.pdb)_ file exists.
   - In my case, it was `C:/Users/Admin/AppData/Roaming/Python/Python313/site-packages`.
 - `FOLDER_PATH_TO_C_FILE` is the folder location where the Python Extension C _(\*.c)_ file exists.
@@ -180,11 +181,11 @@ Note that:
 
 Upon encountering a crash, obtain the line number in the source file pertaining to the crash:
 ```
-kn (for the current thread)
+kn  (for the current thread in focus)
 ~*k (for all the running threads)
 ```
 
-For analyzing memory-related issues via the [AddressSanitizer \(ASAN\)](https://learn.microsoft.com/en-us/cpp/sanitizers/asan?view=msvc-170) tool, you will have to copy the _ASAN_ dynamically linked libraries (DLL's) from the Microsoft Visual Studio's Build Tools folder into the `FOLDER_PATH_TO_PDB_FILE` folder.
+For analyzing memory-related issues via the [AddressSanitizer \(ASAN\)](https://learn.microsoft.com/en-us/cpp/sanitizers/asan?view=msvc-170) tool, you will have to copy the _ASAN_ dynamically linked libraries (_DLL_'s) from the Microsoft Visual Studio's Build Tools folder into the `FOLDER_PATH_TO_PDB_FILE` folder.
 - In my case, the Microsoft Visual Studio's Build Tools folder was: `C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.42.34433\bin\Hostx64\x64`
 - In my case, the files copied were:
   - `clang_rt.asan_dynamic-x86_64.dll`
@@ -199,7 +200,7 @@ Note that if the command `py` does not work, then replace it with `python` or `p
 
 ## Documentation
 
-##### 1. &nbsp; ConPTY *(Class)*
+#### 1. &nbsp; ConPTY *(Class)*
 ```
 ConPTY(width = 80, height = 24)
 ```
@@ -210,13 +211,13 @@ ConPTY(width = 80, height = 24)
 
 This class creates a ConPTY instance for communicating with ConHost.
 
-Check the [`isinitialized`]("#isinitialized") property to confirm the initialization's success.
+Check the [`isinitialized`]("#2-isinitialized-property") property to confirm the initialization's success.
 
 `width` and `height` are the pseudo-console's (terminal's) width and height, measured in 'number of characters'. They determine the I/O's internal buffer size and display. If you need the output unwrapped for _N_ characters, then set `width = N + 1`.
 
 Note that out-of-bounds values are automatically capped to their respective limits.
 
-DO NOT pass the ConPTY class instance in multi-threaded environments. Use a different instance instead.
+<u>DO NOT</u> share a ConPTY class instance across different threads in multi-threaded environments. Use a different instance instead.
 
 ```
 Possible Errors:
@@ -225,7 +226,7 @@ NONE, NOT_WINDOWS_OS, INCOMPATIBLE_WINDOWS_OS,
 CONSOLE_WIDTH_NOT_INT, CONSOLE_HEIGHT_NOT_INT
 ```
 
-##### 2. &nbsp; isinitialized *(Property)*
+#### 2. &nbsp; isinitialized *(Property)*
 | return | Boolean |
 | - | - |
 
@@ -245,7 +246,7 @@ INCOMPATIBLE_WINDOWS_OS, CONSOLE_WIDTH_NOT_INT,
 CONSOLE_HEIGHT_NOT_INT
 ```
 
-##### 3. &nbsp; lasterror *(Property)*
+#### 3. &nbsp; lasterror *(Property)*
 | return | ConPTY.Error |
 | - | - |
 
@@ -278,7 +279,7 @@ STRIPINPUT_NOT_A_BOOLEAN, TRAILINGSPACES_NOT_A_BOOLEAN,
 CONSOLE_MODE_ERROR
 ```
 
-##### 4. &nbsp; width *(Property)*
+#### 4. &nbsp; width *(Property)*
 | return | Integer |
 | - | - |
 
@@ -291,7 +292,7 @@ Possible Errors:
 NONE, CONPTY_UNINITIALIZED
 ```
 
-##### 5. &nbsp; height *(Property)*
+#### 5. &nbsp; height *(Property)*
 | return | Integer |
 | - | - |
 
@@ -304,7 +305,7 @@ Possible Errors:
 NONE, CONPTY_UNINITIALIZED
 ```
 
-##### 6. &nbsp; isrunning *(Property)*
+#### 6. &nbsp; isrunning *(Property)*
 | return | Boolean |
 | - | - |
 
@@ -316,7 +317,7 @@ Possible Errors:
 NONE, CONPTY_UNINITIALIZED
 ```
 
-##### 7. &nbsp; processended *(Property)*
+#### 7. &nbsp; processended *(Property)*
 | return | Boolean |
 | - | - |
 
@@ -334,7 +335,7 @@ Possible Errors:
 NONE, CONPTY_UNINITIALIZED
 ```
 
-##### 8. &nbsp; inputsent *(Property)*
+#### 8. &nbsp; inputsent *(Property)*
 | return | Boolean |
 | - | - |
 
@@ -346,7 +347,7 @@ Possible Errors:
 NONE, CONPTY_UNINITIALIZED
 ```
 
-##### 9. &nbsp; exitcode *(Property)*
+#### 9. &nbsp; exitcode *(Property)*
 | return | Integer or None |
 | - | - |
 
@@ -366,7 +367,7 @@ NONE, CONPTY_UNINITIALIZED, NO_PROCESS_FOUND, FORCED_TERMINATION,
 PROCESS_ALREADY_RUNNING, RUNTIME_SUCCESS, RUNTIME_ERROR
 ```
 
-##### 10. &nbsp; run *(Function)*
+#### 10. &nbsp; run *(Function)*
 ```
 run(command, waitfor = 0, timedelta = 0.1, stripinput = False, internaltimedelta = 100, postenddelay = -1)
 ```
@@ -431,7 +432,7 @@ RUN_PROGRAM_ACCESS_DENIED, RUN_PROGRAM_NAME_TOO_LONG,
 RUN_PROGRAM_ERROR
 ```
 
-##### 11. &nbsp; runandwait *(Function)*
+#### 11. &nbsp; runandwait *(Function)*
 ```
 runandwait(command, timedelta = 0.1, stripinput = False, internaltimedelta = 100, postenddelay = -1)
 ```
@@ -451,7 +452,7 @@ If `False`, check the [`lasterror`]("#lasterror-property") property to determine
 
 Refer to the [`run()`](#run-function) function for more details on the `command`, `timedelta`, `stripinput`, `internaltimedelta`, and `postenddelay` parameters, and for possible errors.
 
-##### 12. &nbsp; waittocomplete *(Function)*
+#### 12. &nbsp; waittocomplete *(Function)*
 ```
 waittocomplete(waitfor = -2, timedelta = 0.1)
 ```
@@ -474,7 +475,7 @@ NONE, CONPTY_UNINITIALIZED, WAITFOR_NOT_A_NUMBER,
 TIMEDELTA_NOT_A_NUMBER, RESIZE_ERROR
 ```
 
-##### 13. &nbsp; resize *(Function)*
+#### 13. &nbsp; resize *(Function)*
 ```
 resize(width, height)
 ```
@@ -497,7 +498,7 @@ NONE, CONPTY_UNINITIALIZED, CONSOLE_WIDTH_NOT_INT,
 CONSOLE_HEIGHT_NOT_INT, RESIZE_ERROR
 ```
 
-##### 14. &nbsp; read *(Function)*
+#### 14. &nbsp; read *(Function)*
 ```
 read(max_bytes_to_read = -1, waitfor = 0, rawdata = False, timedelta = 0.1, trailingspaces = False, min_bytes_to_read = 0)
 ```
@@ -551,7 +552,7 @@ TRAILINGSPACES_NOT_A_BOOLEAN, MIN_READ_BYTES_NOT_AN_INT,
 MIN_MORE_THAN_MAX_READ_BYTES, READ_ERROR
 ```
 
-##### 15. &nbsp; getoutput *(Function)*
+#### 15. &nbsp; getoutput *(Function)*
 ```
 getoutput(waitfor = -1, rawdata = False, timedelta = 0.1, trailingspaces = True, min_bytes_to_read = 0)
 ```
@@ -568,7 +569,7 @@ This is an _alias_ for the [`read()`](#read-function) or `read(-1)` function.
 
 Refer to the [`read()`](#read-function) function for more details on the `waitfor`, `rawdata`, `timedelta`, `trailingspaces`, and `min_bytes_to_read` parameters, and for possible errors.
 
-##### 16. &nbsp; readline *(Function)*
+#### 16. &nbsp; readline *(Function)*
 ```
 readline(waitfor = 0, rawdata = False, timedelta = 0.1)
 ```
@@ -594,7 +595,7 @@ WAITFOR_NOT_A_NUMBER, RAWDATA_NOT_A_BOOLEAN,
 TIMEDELTA_NOT_A_NUMBER, READ_ERROR
 ```
 
-##### 17. &nbsp; readlines *(Function)*
+#### 17. &nbsp; readlines *(Function)*
 ```
 readlines(max_lines_to_read = -1, waitfor = 0, rawdata = False, timedelta = 0.1, min_lines_to_read = 0)
 ```
@@ -632,7 +633,7 @@ MIN_READ_LINES_NOT_AN_INT, MIN_MORE_THAN_MAX_READ_LINES,
 READ_ERROR
 ```
 
-##### 18. &nbsp; write *(Function)*
+#### 18. &nbsp; write *(Function)*
 ```
 write(data_to_write, waitfor = 0, timedelta = 0.1, waittillsent = False)
 ```
@@ -670,7 +671,7 @@ WAITTILLSENT_NOT_A_BOOLEAN, WAITFOR_NOT_A_NUMBER,
 TIMEDELTA_NOT_A_NUMBER, WRITE_INTERNAL_ERROR, WRITE_TIMEOUT
 ```
 
-##### 19. &nbsp; writeline *(Function)*
+#### 19. &nbsp; writeline *(Function)*
 ```
 writeline(dataline_to_write, waitfor = 0, timedelta = 0.1, waittillsent = False)
 ```
@@ -686,7 +687,7 @@ Write an input to the pseudo-console, and hit enter (i.e., send).
 Refer to the [`read()`](#read-function) function for more details on the `waittillsent`, `waitfor`, and `timedelta` parameters.\
 Refer to the [`write()`](#write-function) function for possible errors.
 
-##### 20. &nbsp; sendinput *(Function)*
+#### 20. &nbsp; sendinput *(Function)*
 ```
 sendinput(input_to_send, waitfor = 0, timedelta = 0.1, waittillsent = False)
 ```
@@ -703,7 +704,7 @@ This is an _alias_ for the [`writeline`](#writeline-function) function.
 Refer to the [`read()`](#read-function) function for more details on the `waittillsent`, `waitfor`, and `timedelta` parameters.\
 Refer to the [`write()`](#write-function) function for possible errors.
 
-##### 21. &nbsp; writelines *(Function)*
+#### 21. &nbsp; writelines *(Function)*
 ```
 writelines(datalines_list_to_write, waitfor = 0, timedelta = 0.1, waittillsent = False)
 ```
@@ -727,7 +728,7 @@ WAITFOR_NOT_A_NUMBER, TIMEDELTA_NOT_A_NUMBER,
 WRITE_INTERNAL_ERROR, WRITE_TIMEOUT
 ```
 
-##### 22. &nbsp; kill *(Function)*
+#### 22. &nbsp; kill *(Function)*
 ```
 kill()
 ```
@@ -745,7 +746,7 @@ NONE, CONPTY_UNINITIALIZED, NO_PROCESS_FOUND,
 RUNTIME_SUCCESS, FORCED_TERMINATION, KILL_PROCESS_ERROR
 ```
 
-##### 23. &nbsp; enablevts *(Function)*
+#### 23. &nbsp; enablevts *(Function)*
 ```
 enablevts()
 ```
@@ -762,7 +763,7 @@ Possible Errors:
 NONE, CONSOLE_MODE_ERROR
 ```
 
-##### 24. &nbsp; disablevts *(Function)*
+#### 24. &nbsp; disablevts *(Function)*
 ```
 disablevts()
 ```
@@ -775,7 +776,7 @@ If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`]("#lasterror").
 
 Refer to the [`enablevts()`](#enablevts-function) function for possible errors.
 
-##### 25. &nbsp; resetdisplay *(Function)*
+#### 25. &nbsp; resetdisplay *(Function)*
 ```
 resetdisplay()
 ```
@@ -789,7 +790,7 @@ If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`]("#lasterror").
 
 Refer to the [`enablevts()`](#enablevts-function) function for possible errors.
 
-##### 26. &nbsp; Error Enumerations *(Enum Class)*
+#### 26. &nbsp; Error Enumerations *(Enum Class)*
 ```
 Error.*
 ```
