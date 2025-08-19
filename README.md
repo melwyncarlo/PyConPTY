@@ -81,7 +81,7 @@ print(console.getoutput())
 ```
 
 ![Example #1: IPConfig Example - Output](https://raw.githubusercontent.com/melwyncarlo/PyConPTY/refs/heads/main/examples/ipconfig_example.png "Example #1: IPConfig Example - Output")
-<br/>
+<br/><br/>
 
 - **Example #2**
 ```py
@@ -143,7 +143,7 @@ int main() {
 ```
 
 ![Example #2: Factorial Example - Output](https://raw.githubusercontent.com/melwyncarlo/PyConPTY/refs/heads/main/examples/factorial_example.png "Example #1: Factorial Example - Output")
-<br/><br/>
+<br/><br/><br/>
 
 ### Make <sub>_(for the mavericks out there)_</sub>
 
@@ -204,7 +204,7 @@ For analyzing memory-related issues via the [AddressSanitizer \(ASAN\)](https://
 9. Repeat steps #5 to #8 until successfull.
 
 Note that if the command `py` does not work, then replace it with `python` or `python3` _(whichever works first)_.
-<br/><br/>
+<br/><br/><br/>
 
 ## Documentation
 
