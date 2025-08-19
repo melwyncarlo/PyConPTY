@@ -30,7 +30,7 @@ A Python-based interface for the ConPTY (Windows Pseudo-console) API.
 _**Cool Facts:**_
  - No Dependencies!
  - **Thread-safe** <sub>Subject to one thread per ConPTY class instance, i.e., no sharing instances between threads.</sub>
- - 5820 out of 5820 tests passed _(100%)_ <sub>[Check out the tests in action](https://www.youtube.com/)</sub>
+ - 5820 out of 5820 tests passed _(100%)_ <sub>[Check out the tests in action](https://youtu.be/WnRAkLy9tRg)</sub>
  - 100% total coverage <sub>Note that, a few lines of unreachable code have been excluded from coverage as including them involves purposefully introducing errors in the main code.</sub>
  - No one is perfect. <sub>So, kindly report issues or bugs; when submitting issues, it is recommended to append a sample code that is capable of reproducing the bug.</sub>
 <br/><br/>
@@ -61,28 +61,81 @@ If you are still facing issues, then maybe _Python_ is not installed in the firs
 
 ### Use
 
-* Generic Example
+- **Example #1**
 
 ```
+# Filename: ipconfig_example.py
+
 from pyconpty import ConPTY
 
 console = ConPTY()
-console.run(APPLICATION_PATH_TO_RUN)
-read_1 = console.read()
-console.write(INPUT_TO_SEND)
-read_2 = console.read()
+console.run("ipconfig")
+print(console.getoutput())
 ```
 
-* Specific Example
+![Example #1: IPConfig Example - Output](path/to/image.png "Example #1: IPConfig Example - Output")
+
+- **Example #2**
 
 ```
+# Filename: factorial_example.py
+
 from pyconpty import ConPTY
 
 console = ConPTY()
-console.run("C:/windows/system32/cmd.exe")
-console.write("ipconfig")
-ipconfig_data = console.read()
+console.run("factorial.exe", stripinput=True)
+number = input(console.getoutput())
+
+if number[0] == "-":
+    number_without_minus = number[1:]
+else:
+    number_without_minus = number
+
+if number_without_minus.isdigit():
+    console.sendinput(str(number))
+    print(console.getoutput())
+else:
+    print(" Only integer numbers accepted!\n")
+
+if console.isrunning:
+    console.kill()
 ```
+
+```
+/* Filename: factorial_example.c                           */
+/* Build: gcc factorial_example.c -o factorial_example.exe */
+
+#include <stdio.h>
+
+int get_factorial(int number) {
+    if (number < 0) {
+        return -1;
+    } else if ((number == 0) || (number == 1)) {
+        return 1;
+    } else {
+        int factorial = 1;
+        for (int i = 1; i <= number; i++) {
+            factorial *= i;
+        }
+        return factorial;
+    }
+}
+
+int main() {
+    int number;
+    printf("\n Compute the factorial of: ");
+    scanf("%d", &number);
+    const int factorial = get_factorial(number);
+    if (factorial == -1) {
+        printf(" !%d = %s\n", number, "undefined");
+    } else {
+        printf(" !%d = %d\n", number, factorial);
+    }
+    return 0;
+}
+```
+
+![Example #2: Factorial Example - Output](path/to/image.png "Example #1: Factorial Example - Output")
 
 ### Make <sub>_(for the mavericks out there)_</sub>
 
@@ -109,36 +162,37 @@ py -m pytest .
 ```
 The test files are located in the `tests` folder.
 
-If unnoticeable problems exist, then you may also rely on the [Microsoft Console Debugger (CDB)](https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/debugging-using-cdb-and-ntsd) by downloading the [Windows SDK](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/) and only installing the _Debugging Tools_.
+If unnoticeable problems exist, then you may also rely on the [Microsoft Console Debugger (CDB)](https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/debugging-using-cdb-and-ntsd) by downloading the [Windows SDK](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/) and only installing the _Debugging Tools_. [py-spy](https://pypi.org/project/py-spy/) also helps.
 
-After installing the debugging tools, add the following (or similar) filepath to the System/User Environment Path Variables, as it contains the `cdb.exe` program:\
+After installing the debugging tools, add the following (or similar) filepath to the System/User Environment Path Variables, as it contains the `cdb.exe` program:
 `C:\Program Files (x86)\Windows Kits\10\Debuggers\x64`.
+<br/>
 
 Testing via CDB:
 ```
-cdb python -m pytest .
-.sympath SRV*c:\Symbols*http://msdl.microsoft.com/download/symbols;PATH_TO_PDB_FILE
-.srcpath PATH_TO_C_FILE
-.lines
-g
+cls; cdb -y "cache*C:\Symbols;srv*http://msdl.microsoft.com/download/symbols;FOLDER_PATH_TO_PDB_FILE" -srcpath "FOLDER_PATH_TO_C_FILE" -lines -c "sxd av; g" python -m pytest .
 ```
-- `PATH_TO_PDB_FILE` is the folder location where the Program Database _(\*.pdb)_ file exists.
+Note that:
+- `FOLDER_PATH_TO_PDB_FILE` is the folder location where the Program Database _(\*.pdb)_ file exists.
   - In my case, it was `C:/Users/Admin/AppData/Roaming/Python/Python313/site-packages`.
-- `PATH_TO_C_FILE` is the folder location where the Python Extension C _(\*.c)_ file exists.
+- `FOLDER_PATH_TO_C_FILE` is the folder location where the Python Extension C _(\*.c)_ file exists.
   - In my case, it was `C:/Users/Admin/Documents/Miscellaneous/PyConPTY/PyPI/src/pyconpty`.
 
 Upon encountering a crash, obtain the line number in the source file pertaining to the crash:
 ```
-kn
+kn (for the current thread)
+~*k (for all the running threads)
 ```
 
-Write about copying DLLs from `C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.42.34433\bin\Hostx64\x64` to `C:\Users\Admin\AppData\Roaming\Python\Python313\site-packages`
-cls; cdb -y "cache*C:\Symbols;srv*http://msdl.microsoft.com/download/symbols;C:\Users\Admin\AppData\Roaming\Python\Python313\site-packages" -srcpath "C:\Users\Admin\Documents\Miscellaneous\PyConPTY\PyPI\src\pyconpty" -lines -c "sxd av; g" python -m pytest .
+For analyzing memory-related issues via the [AddressSanitizer \(ASAN\)](https://learn.microsoft.com/en-us/cpp/sanitizers/asan?view=msvc-170) tool, you will have to copy the _ASAN_ dynamically linked libraries (DLL's) from the Microsoft Visual Studio's Build Tools folder into the `FOLDER_PATH_TO_PDB_FILE` folder.
+- In my case, the Microsoft Visual Studio's Build Tools folder was: `C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.42.34433\bin\Hostx64\x64`
+- In my case, the files copied were:
+  - `clang_rt.asan_dynamic-x86_64.dll`
+  - `clang_rt.asan_dbg_dynamic-x86_64.dll`
+  - `clang_rt.asan_dbg_dynamic-x86_64.pdb`
+  - `clang_rt.asan_dynamic-x86_64.pdb`
 
-9. Repeat step #5:
-```
-py make.py
-```
+9. Repeat steps #5 to #8 until successfull.
 
 Note that if the command `py` does not work, then replace it with `python` or `python3` _(whichever works first)_.
 <br/><br/>
