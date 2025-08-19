@@ -23,7 +23,7 @@ For queries, contact me at: melwyncarlo@gmail.com
 
 A Python-based interface for the ConPTY (Windows Pseudo-console) API.
 
-> Your ultimate space to get immensely creative with unique terminals, remote accesses, and automated and interactive processes.
+> Your ultimate space to get immensely creative with unique terminals, remote accesses, and interactive and automated processes.
 >
 > &nbsp; &ndash; &nbsp; Melwyn Francis Carlo
 
@@ -182,7 +182,7 @@ cls; cdb -y "cache*C:\Symbols;srv*http://msdl.microsoft.com/download/symbols;FOL
 Upon encountering a crash, obtain the line number in the source file pertaining to the crash:
 ```
 kn  (for the current thread in focus)
-~*k (for all the running threads)
+~*k (for all running threads)
 ```
 
 For analyzing memory-related issues via the [AddressSanitizer \(ASAN\)](https://learn.microsoft.com/en-us/cpp/sanitizers/asan?view=msvc-170) tool, you will have to copy the _ASAN_ dynamically linked libraries (_DLL_'s) from the Microsoft Visual Studio's Build Tools folder into the `FOLDER_PATH_TO_PDB_FILE` folder.
@@ -211,7 +211,7 @@ ConPTY(width = 80, height = 24)
 
 This class creates a ConPTY instance for communicating with ConHost.
 
-Check the [`isinitialized`]("#2-isinitialized-property") property to confirm the initialization's success.
+Check the [`isinitialized`]("#2--isinitialized-property") property to confirm the initialization's success.
 
 `width` and `height` are the pseudo-console's (terminal's) width and height, measured in 'number of characters'. They determine the I/O's internal buffer size and display. If you need the output unwrapped for _N_ characters, then set `width = N + 1`.
 
@@ -225,6 +225,7 @@ Possible Errors:
 NONE, NOT_WINDOWS_OS, INCOMPATIBLE_WINDOWS_OS,
 CONSOLE_WIDTH_NOT_INT, CONSOLE_HEIGHT_NOT_INT
 ```
+<br/>
 
 #### 2. &nbsp; isinitialized *(Property)*
 | return | Boolean |
@@ -232,7 +233,7 @@ CONSOLE_WIDTH_NOT_INT, CONSOLE_HEIGHT_NOT_INT
 
 `True`, if the class ConPTY initialized properly, else `False`.
 
-If `False`, then check the [`lasterror`]("#lasterror") property to determine the reason for failure.
+If `False`, then check the [`lasterror`]("#3--lasterror-property") property to determine the reason for failure.
 
 Check this property post-initialization as a safety-check, if the initialization arguments are dynamic and not static.
 
@@ -245,12 +246,13 @@ NONE, CONPTY_UNINITIALIZED, NOT_WINDOWS_OS,
 INCOMPATIBLE_WINDOWS_OS, CONSOLE_WIDTH_NOT_INT,
 CONSOLE_HEIGHT_NOT_INT
 ```
+<br/>
 
 #### 3. &nbsp; lasterror *(Property)*
 | return | ConPTY.Error |
 | - | - |
 
-This value is one of the many [(refer to) Error Enumerations](#error-enumerations-enum-class) that is generated after each function call.
+This value is one of the many [Error Enumerations](#26--error-enumerations-enum-class) that is generated after each function call. The information for each function in this documentation is appended with a list of possible errors for your reference.
 
 This value indicates whether a function call succeeded or failed.\
 If a function call failed, then this value indicates the reason for its failure.
@@ -278,6 +280,7 @@ POSTENDDELAY_NOT_A_NUMBER, RAWDATA_NOT_A_BOOLEAN,
 STRIPINPUT_NOT_A_BOOLEAN, TRAILINGSPACES_NOT_A_BOOLEAN,
 CONSOLE_MODE_ERROR
 ```
+<br/>
 
 #### 4. &nbsp; width *(Property)*
 | return | Integer |
@@ -291,6 +294,7 @@ Possible Errors:
 
 NONE, CONPTY_UNINITIALIZED
 ```
+<br/>
 
 #### 5. &nbsp; height *(Property)*
 | return | Integer |
@@ -304,6 +308,7 @@ Possible Errors:
 
 NONE, CONPTY_UNINITIALIZED
 ```
+<br/>
 
 #### 6. &nbsp; isrunning *(Property)*
 | return | Boolean |
@@ -316,6 +321,7 @@ Possible Errors:
 
 NONE, CONPTY_UNINITIALIZED
 ```
+<br/>
 
 #### 7. &nbsp; processended *(Property)*
 | return | Boolean |
@@ -334,6 +340,7 @@ Possible Errors:
 
 NONE, CONPTY_UNINITIALIZED
 ```
+<br/>
 
 #### 8. &nbsp; inputsent *(Property)*
 | return | Boolean |
@@ -346,6 +353,7 @@ Possible Errors:
 
 NONE, CONPTY_UNINITIALIZED
 ```
+<br/>
 
 #### 9. &nbsp; exitcode *(Property)*
 | return | Integer or None |
@@ -366,6 +374,7 @@ Possible Errors:
 NONE, CONPTY_UNINITIALIZED, NO_PROCESS_FOUND, FORCED_TERMINATION,
 PROCESS_ALREADY_RUNNING, RUNTIME_SUCCESS, RUNTIME_ERROR
 ```
+<br/>
 
 #### 10. &nbsp; run *(Function)*
 ```
@@ -385,7 +394,7 @@ Returns `True` if the process started successfully, else immediately returns `Fa
 
 The command string's length must not exceed 32,766 characters.
 
-If `False`, check the [`lasterror`]("#lasterror-property") property to determine the reason for failure.
+If `False`, check the [`lasterror`]("#3--lasterror-property") property to determine the reason for failure.
 
 `waitfor` states the minimum amount of time, in seconds, to wait for incoming data.
 
@@ -431,6 +440,7 @@ RUN_INTERNAL_ERROR, RUN_PROGRAM_NOT_FOUND,
 RUN_PROGRAM_ACCESS_DENIED, RUN_PROGRAM_NAME_TOO_LONG,
 RUN_PROGRAM_ERROR
 ```
+<br/>
 
 #### 11. &nbsp; runandwait *(Function)*
 ```
@@ -446,11 +456,12 @@ runandwait(command, timedelta = 0.1, stripinput = False, internaltimedelta = 100
 
 Runs the given command or program, and then waits for its completion.\
 Returns `True` if the process started successfully, else immediately returns `False`.\
-This is an _alias_ for the [`run(command, waitfor=-1, ...)`](#run-function) function.
+This is an _alias_ for the [`run(command, waitfor=-1, ...)`](#10--run-function) function.
 
-If `False`, check the [`lasterror`]("#lasterror-property") property to determine the reason for failure.
+If `False`, check the [`lasterror`]("#3--lasterror-property") property to determine the reason for failure.
 
-Refer to the [`run()`](#run-function) function for more details on the `command`, `timedelta`, `stripinput`, `internaltimedelta`, and `postenddelay` parameters, and for possible errors.
+Refer to the [`run()`](#10--run-function) function for more details on the `command`, `timedelta`, `stripinput`, `internaltimedelta`, and `postenddelay` parameters, and for possible errors.
+<br/>
 
 #### 12. &nbsp; waittocomplete *(Function)*
 ```
@@ -464,9 +475,9 @@ waittocomplete(waitfor = -2, timedelta = 0.1)
 Waits for a command or program to partially or fully complete.\
 Returns `True` if the wait conditions were satisfied, else immediately returns `False`.
 
-If `False`, check the [`lasterror`]("#lasterror-property") property to determine the reason for failure.
+If `False`, check the [`lasterror`]("#3--lasterror-property") property to determine the reason for failure.
 
-Refer to the [`run()`](#run-function) function for more details on the `waitfor` and `timedelta` parameters.
+Refer to the [`run()`](#10--run-function) function for more details on the `waitfor` and `timedelta` parameters.
 
 ```
 Possible Errors:
@@ -474,6 +485,7 @@ Possible Errors:
 NONE, CONPTY_UNINITIALIZED, WAITFOR_NOT_A_NUMBER,
 TIMEDELTA_NOT_A_NUMBER, RESIZE_ERROR
 ```
+<br/>
 
 #### 13. &nbsp; resize *(Function)*
 ```
@@ -497,6 +509,7 @@ Possible Errors:
 NONE, CONPTY_UNINITIALIZED, CONSOLE_WIDTH_NOT_INT,
 CONSOLE_HEIGHT_NOT_INT, RESIZE_ERROR
 ```
+<br/>
 
 #### 14. &nbsp; read *(Function)*
 ```
@@ -551,6 +564,7 @@ RAWDATA_NOT_A_BOOLEAN, TIMEDELTA_NOT_A_NUMBER,
 TRAILINGSPACES_NOT_A_BOOLEAN, MIN_READ_BYTES_NOT_AN_INT,
 MIN_MORE_THAN_MAX_READ_BYTES, READ_ERROR
 ```
+<br/>
 
 #### 15. &nbsp; getoutput *(Function)*
 ```
@@ -565,9 +579,10 @@ getoutput(waitfor = -1, rawdata = False, timedelta = 0.1, trailingspaces = True,
 | min_bytes_to_read | Integer (0 to SIZE_4B_MAX) |
 
 Returns all the data currently outputted by the pseudo-console, if available, else an empty string.\
-This is an _alias_ for the [`read()`](#read-function) or `read(-1)` function.
+This is an _alias_ for the [`read()`](#14--read-function) or `read(-1)` function.
 
-Refer to the [`read()`](#read-function) function for more details on the `waitfor`, `rawdata`, `timedelta`, `trailingspaces`, and `min_bytes_to_read` parameters, and for possible errors.
+Refer to the [`read()`](#14--read-function) function for more details on the `waitfor`, `rawdata`, `timedelta`, `trailingspaces`, and `min_bytes_to_read` parameters, and for possible errors.
+<br/>
 
 #### 16. &nbsp; readline *(Function)*
 ```
@@ -585,7 +600,7 @@ If the trailing data in the saved buffer does not contain a newline character:
 - If a process is running, then that trailing data is considered unavailable.
 - If no process is running, then that trailing data is considered available.
 
-Refer to the [`read()`](#read-function) function for more details on the `waitfor`, `rawdata`, and `timedelta` parameters.
+Refer to the [`read()`](#14--read-function) function for more details on the `waitfor`, `rawdata`, and `timedelta` parameters.
 
 ```
 Possible Errors:
@@ -594,6 +609,7 @@ NONE, CONPTY_UNINITIALIZED, NO_PROCESS_FOUND,
 WAITFOR_NOT_A_NUMBER, RAWDATA_NOT_A_BOOLEAN,
 TIMEDELTA_NOT_A_NUMBER, READ_ERROR
 ```
+<br/>
 
 #### 17. &nbsp; readlines *(Function)*
 ```
@@ -621,7 +637,7 @@ The number of lines returned could be less than `max_lines_to_read` subject to t
 
 `min_lines_to_read` number of lines are read until the `waitfor` time has run out.
 
-Refer to the [`read()`](#read-function) function for more details on the `waitfor`, `rawdata`, and `timedelta` parameters.
+Refer to the [`read()`](#14--read-function) function for more details on the `waitfor`, `rawdata`, and `timedelta` parameters.
 
 ```
 Possible Errors:
@@ -632,6 +648,7 @@ RAWDATA_NOT_A_BOOLEAN, TIMEDELTA_NOT_A_NUMBER,
 MIN_READ_LINES_NOT_AN_INT, MIN_MORE_THAN_MAX_READ_LINES,
 READ_ERROR
 ```
+<br/>
 
 #### 18. &nbsp; write *(Function)*
 ```
@@ -670,6 +687,7 @@ NONE, CONPTY_UNINITIALIZED, NO_PROCESS_FOUND, DATA_NOT_A_STRING,
 WAITTILLSENT_NOT_A_BOOLEAN, WAITFOR_NOT_A_NUMBER,
 TIMEDELTA_NOT_A_NUMBER, WRITE_INTERNAL_ERROR, WRITE_TIMEOUT
 ```
+<br/>
 
 #### 19. &nbsp; writeline *(Function)*
 ```
@@ -684,8 +702,9 @@ writeline(dataline_to_write, waitfor = 0, timedelta = 0.1, waittillsent = False)
 
 Write an input to the pseudo-console, and hit enter (i.e., send).
 
-Refer to the [`read()`](#read-function) function for more details on the `waittillsent`, `waitfor`, and `timedelta` parameters.\
-Refer to the [`write()`](#write-function) function for possible errors.
+Refer to the [`read()`](#14--read-function) function for more details on the `waittillsent`, `waitfor`, and `timedelta` parameters.\
+Refer to the [`write()`](#18--write-function) function for possible errors.
+<br/>
 
 #### 20. &nbsp; sendinput *(Function)*
 ```
@@ -699,10 +718,11 @@ sendinput(input_to_send, waitfor = 0, timedelta = 0.1, waittillsent = False)
 | timedelta | Integer or Float (1E-3 to SIZE_4B_MAX) |
 
 Write an input to the pseudo-console, and hit enter (i.e., send).\
-This is an _alias_ for the [`writeline`](#writeline-function) function.
+This is an _alias_ for the [`writeline`](#19--writeline-function) function.
 
-Refer to the [`read()`](#read-function) function for more details on the `waittillsent`, `waitfor`, and `timedelta` parameters.\
-Refer to the [`write()`](#write-function) function for possible errors.
+Refer to the [`read()`](#14--read-function) function for more details on the `waittillsent`, `waitfor`, and `timedelta` parameters.\
+Refer to the [`write()`](#18--write-function) function for possible errors.
+<br/>
 
 #### 21. &nbsp; writelines *(Function)*
 ```
@@ -717,7 +737,7 @@ writelines(datalines_list_to_write, waitfor = 0, timedelta = 0.1, waittillsent =
 
 Write a list of inputs to the pseudo-console, hitting enter after each line of input.
 
-Refer to the [`read()`](#read-function) function for more details on the `waittillsent`, `waitfor`, and `timedelta` parameters.
+Refer to the [`read()`](#14--read-function) function for more details on the `waittillsent`, `waitfor`, and `timedelta` parameters.
 
 ```
 Possible Errors:
@@ -727,6 +747,7 @@ DATA_NOT_A_LIST_OF_STRINGS, WAITTILLSENT_NOT_A_BOOLEAN,
 WAITFOR_NOT_A_NUMBER, TIMEDELTA_NOT_A_NUMBER,
 WRITE_INTERNAL_ERROR, WRITE_TIMEOUT
 ```
+<br/>
 
 #### 22. &nbsp; kill *(Function)*
 ```
@@ -737,7 +758,7 @@ kill()
 
 Terminates (kills) the currently running process, and returns `True` if the process was terminated, else `False`.
 
-If `False`, check the [`lasterror`]("#lasterror") property to determine the reason for failure.
+If `False`, check the [`lasterror`]("#3--lasterror-property") property to determine the reason for failure.
 
 ```
 Possible Errors:
@@ -745,6 +766,7 @@ Possible Errors:
 NONE, CONPTY_UNINITIALIZED, NO_PROCESS_FOUND,
 RUNTIME_SUCCESS, FORCED_TERMINATION, KILL_PROCESS_ERROR
 ```
+<br/>
 
 #### 23. &nbsp; enablevts *(Function)*
 ```
@@ -755,13 +777,14 @@ enablevts()
 
 Enables Virtual Terminal Sequences (VTS), aka, Escape Code Sequences for the terminal display, and returns `True` if VTS is successfully enabled, else `False`.
 
-If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`]("#lasterror").
+If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`]("#3--lasterror-property").
 
 ```
 Possible Errors:
 
 NONE, CONSOLE_MODE_ERROR
 ```
+<br/>
 
 #### 24. &nbsp; disablevts *(Function)*
 ```
@@ -772,9 +795,10 @@ disablevts()
 
 Disables Virtual Terminal Sequences (VTS), aka, Escape Code Sequences for the terminal display, and returns `True` if VTS is successfully disabled, else `False`.
 
-If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`]("#lasterror").
+If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`]("#3--lasterror-property").
 
-Refer to the [`enablevts()`](#enablevts-function) function for possible errors.
+Refer to the [`enablevts()`](#23--enablevts-function) function for possible errors.
+<br/>
 
 #### 25. &nbsp; resetdisplay *(Function)*
 ```
@@ -784,11 +808,12 @@ resetdisplay()
 | - | - |
 
 Resets the terminal display.\
-This is an _alias_ for the [`disablevts()`](#disablevts-function) function.
+This is an _alias_ for the [`disablevts()`](#24--disablevts-function) function.
 
-If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`]("#lasterror").
+If `False`, then [`lasterror = ConPTY.Error.CONSOLE_MODE_ERROR`]("#3--lasterror-property").
 
-Refer to the [`enablevts()`](#enablevts-function) function for possible errors.
+Refer to the [`enablevts()`](#23--enablevts-function) function for possible errors.
+<br/>
 
 #### 26. &nbsp; Error Enumerations *(Enum Class)*
 ```
@@ -872,4 +897,4 @@ Error.*
 ## License
 
 GNU General Public License version 3 (GPL v3).\
-Refer to [LICENSE](https://markdownlivepreview.com/) to know more.
+Refer to [LICENSE](https://github.com/melwyncarlo/PyConPTY/blob/main/LICENSE) to know more.
