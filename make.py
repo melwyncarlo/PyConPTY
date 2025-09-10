@@ -24,7 +24,8 @@ import shutil
 
 shutil.rmtree("build", ignore_errors=True)
 shutil.rmtree("dist", ignore_errors=True)
-shutil.rmtree("src/pyconpty.egg-info", ignore_errors=True)
+shutil.rmtree("pip_gui.egg-info", ignore_errors=True)
+shutil.rmtree("src/pip_gui.egg-info", ignore_errors=True)
 
 os.system(
     "pip uninstall pyconpty && pip cache purge && cls && pip install "
