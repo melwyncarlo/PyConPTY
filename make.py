@@ -28,6 +28,6 @@ shutil.rmtree("pip_gui.egg-info", ignore_errors=True)
 shutil.rmtree("src/pip_gui.egg-info", ignore_errors=True)
 
 os.system(
-    "pip uninstall pyconpty && pip cache purge && cls && pip install "
-    "--no-cache-dir --no-binary :all: ."
+    "pip uninstall pyconpty && pip cache purge && cls && "
+    "pip install --no-cache-dir --no-binary :all: ."
 )
